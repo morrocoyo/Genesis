@@ -34,12 +34,13 @@ def similar(a, b):
 La funcion CuentaTemaa define el tema mediante las palabras que más aparecen en
 el archivo Ambiente.txt
 """
-A=CuentaTemaa()
+#A=CuentaTemaa()
+A = pickle.load( open( 'A', "rb" ) )
 """
 Se Cargan las credenciales de acceso al api de twitter
 """
-ACCESS_TOKEN = u'817383621397008384-TXP2pfAr0aLmr3E9Le3tDBlMSsUTQF9'
-ACCESS_SECRET = u'oBXXy2cmyZ80PUm6EhUHGAs7SRb13HxYO5TWj2fq9AYVN'
+ACCESS_TOKEN = u'817383621397008384-TXP2pfAr0aLmr3E9Le3tDBlMSsUTQFg'
+ACCESS_SECRET = u'oBXXy2cmyZ80PUm6EhUHGAs7SRb13HxYO5TWj2fqgAYVN'
 CONSUMER_KEY = u'kpKOxDTCtWI8ueapP6JSySgfM'
 CONSUMER_SECRET = u'ep7Di6fA1izMlQdQXBmcKiGT0q7PoXX2nDgaxFHjihA2ofgaAu'
 oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
@@ -49,24 +50,26 @@ Ciclo de Simulacion: Busqueda de tuits ambientales en Morrocoyo TimeLine + Strea
 Influenciadores = pickle.load( open( 'Influenciadores', "rb" ) )
 #Lista de palabras mas usadas en el tema
 LA=A.keys()
+#pdb.set_trace()   
 #crea un texto con las palabras separandolas por coma
 tx=",".join(LA)
 twitter = Twitter(auth=oauth)
-MorroTL=twitter.statuses.home_timeline(count=200)
+#MorroTL=twitter.statuses.home_timeline(count=200)
 try:
    LastId=MorroTL[len(MorroTL)-1]['id']
 except:
     LastId=0;       
 #One_hour_ago = datetime.datetime.utcnow().replace(microsecond=0)-datetime.timedelta(hours = 1)
 One_hour_ago = datetime.datetime.utcnow()-datetime.timedelta(hours = 1)
-k=1   #veces que corre el ciclo completo
-kk=1    #veces que corre el ciclo de streaming
+k=2   #veces que corre el ciclo completo
+kk=5    #veces que corre el ciclo de streaming
 count1=0;
-count2=0;
 tweet_count = 40    #de tweets que lee en el streaming
 i=0;
 L=dict();
 while (count1<k):
+    if count1>0:
+        MorroTL=twitter.statuses.home_timeline(count=200)
     for tweet in MorroTL:
         try:        #si es un retweet
             try:        #si cita una pagina en el tweet
@@ -110,11 +113,14 @@ while (count1<k):
         tweeted_datetime = parser.parse(L[i][3]).replace(tzinfo=None)       
         if tweeted_datetime > One_hour_ago:
             print i            
-            i+=1         
-            
-    twitter_stream = TwitterStream(auth=oauth)
-    iterator = twitter_stream.statuses.filter(track=tx, language="es")
+            i+=1    
+    count2=0;        
     while (count2<kk):
+        twitter_stream = TwitterStream(auth=oauth)
+        iterator = twitter_stream.statuses.filter(track=tx, language="es")
+        print count2
+        if count2>0:
+            time.sleep(180)
         for tweet in iterator:
             try:
                 try:        #si es un retweet
@@ -162,11 +168,10 @@ while (count1<k):
                     i+=1
                 if tweet_count <= 0:
                     break            
-                count2+=1
             except:
-                count2+=1
-
-        
+                pass
+        count2+=1
+  
     count1+=1
     """
     Crea una lista de 3 listas de tamaño Longitud de MorroTL+tweet_count con la calificacion de criterio para cada tweet 
@@ -198,6 +203,8 @@ while (count1<k):
                 Criterios[2][q]=u[0]['followers_count']/u[0]['statuses_count']
         except:
             pass
+    LBIG=L;
+      
     Criterios0=[Criterios[0][q] for q in range(len(L)) if Criterios[0][q]>0]
     Criterios1=[Criterios[1][q] for q in range(len(L)) if Criterios[0][q]>0]
     Criterios2=[Criterios[2][q] for q in range(len(L)) if Criterios[0][q]>0]
@@ -236,8 +243,16 @@ while (count1<k):
                         except:
                             pass
     
-TheList=L[:int(math.modf(len(L)*1/2)[1])]
-TheList = sorted(TheList, key=lambda x:x[3], reverse=True)
+    TheList=L[:int(math.modf(len(L)*0.85)[1])]
+    TheList = sorted(TheList, key=lambda x:x[3], reverse=True)
+    o, p = len(L), k
+    Lists=[[0 for x in range(o)] for y in range(p)]
+    Lists[k-1]=TheList
+    pickle.dump(Lists, open('Lists', "wb" ))
+    L={index:l for index,l in enumerate(L)}
+    i=len(L)
+
+        
 InfluenciadoresTest=[q[1] for q in TheList]
 for I in InfluenciadoresTest:
     try:
@@ -248,9 +263,16 @@ for I in InfluenciadoresTest:
     except:
         Influenciadores[I]=0
         print 'nuevo ',I
-pickle.dump(Influenciadores, open('Influenciadores', "wb" ))             
+pickle.dump(Influenciadores, open('Influenciadores', "wb" ))
+
 for t in TheList:
     print ''.join([t[0],'\n',t[1],'\n',t[2],'\n\n'])
+        
+File='Ambiente.txt';
+for t in TheList: 
+    with open(File, 'a') as dest:
+                T=''.join(['\n', t[2].encode('utf-8')])
+                dest.write(T) 
 
 
     

@@ -113,12 +113,12 @@ def CuentaTemaa():
     wc.pop('hora',None); wc.pop('lluvias',None); wc.pop('niveles',None); wc.pop('número',None); wc.pop('países',None);
     wc.pop('prioridad',None); wc.pop('pueblo',None); wc.pop('regulación',None); wc.pop('siglo',None); wc.pop('superficie',None);
     wc.pop('temblaba',None); wc.pop('veces',None); wc.pop('vía',None); wc.pop('vuelos',None); wc.pop('noticia',None);wc.pop('co...',None);
-    wc.pop('apoyo',None);wc.pop('cerros',None);wc.pop('suelos',None);wc.pop('Cerros',None); wc.pop('Acción',None);
+    wc.pop('apoyo',None);wc.pop('cerros',None);wc.pop('suelos',None);wc.pop('Cerros',None); wc.pop('Acción',None);wc.pop('co..',None);
     wc.pop('China',None);wc.pop('Valle',None);wc.pop('destrucción',None);wc.pop('intervención',None); wc.pop('plan',None);
-    wc.pop('Carlos',None);wc.pop('IDEAMColombia',None);
+    wc.pop('Carlos',None);wc.pop('IDEAMColombia',None);wc.pop('naturaleza',None);
     
     PalabrasTema={k: sigmoid(v) for k, v in wc.items()}
-    PalabrasTema=dict((k, v) for k, v in PalabrasTema.items() if v>0.88)
+    PalabrasTema=dict((k, v) for k, v in PalabrasTema.items() if v>0.8)
     #PalabrasTema = dict(sorted(wc.iteritems(), key=operator.itemgetter(1), reverse=True)[:len(wc)/30]);
     PalabrasTema['Sostenibilidad']=PalabrasTema[max(PalabrasTema, key=PalabrasTema.get)]
     PalabrasTema['Climático']=PalabrasTema[max(PalabrasTema, key=PalabrasTema.get)] 
