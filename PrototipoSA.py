@@ -54,7 +54,7 @@ LA=A.keys()
 #crea un texto con las palabras separandolas por coma
 tx=",".join(LA)
 twitter = Twitter(auth=oauth)
-#MorroTL=twitter.statuses.home_timeline(count=200)
+MorroTL=twitter.statuses.home_timeline(count=200)
 try:
    LastId=MorroTL[len(MorroTL)-1]['id']
 except:
@@ -64,56 +64,59 @@ One_hour_ago = datetime.datetime.utcnow()-datetime.timedelta(hours = 1)
 k=2   #veces que corre el ciclo completo
 kk=5    #veces que corre el ciclo de streaming
 count1=0;
-tweet_count = 40    #de tweets que lee en el streaming
+tweet_count = 50    #de tweets que lee en el streaming
 i=0;
 L=dict();
 while (count1<k):
     if count1>0:
         MorroTL=twitter.statuses.home_timeline(count=200)
     for tweet in MorroTL:
-        try:        #si es un retweet
-            try:        #si cita una pagina en el tweet
-                L[i]=[tweet['retweeted_status']['user']['name'],tweet['retweeted_status']['user']['screen_name'],
-                  tweet['retweeted_status']['text'],tweet['retweeted_status']['created_at'],
-                  tweet['retweeted_status']['retweet_count'],tweet['retweeted_status']['favorite_count'],
-                  tweet['retweeted_status']['user']['description'],tweet['retweeted_status']['entities']['urls'][0]['url'],
-                  tweet['created_at'],tweet['user']['time_zone'], tweet['user']['lang'], tweet['place'],
-                  tweet['user']['verified'],tweet['user']['screen_name'],tweet['user']['description'],
-                  tweet['user']['followers_count'],tweet['user']['friends_count'],tweet['user']['statuses_count']];
-            except:
-                L[i]=[tweet['retweeted_status']['user']['name'],tweet['retweeted_status']['user']['screen_name'],
-                  tweet['retweeted_status']['text'],tweet['retweeted_status']['created_at'],
-                  tweet['retweeted_status']['retweet_count'],tweet['retweeted_status']['favorite_count'],
-                  tweet['retweeted_status']['user']['description'],'',
-                  tweet['created_at'],tweet['user']['time_zone'], tweet['user']['lang'], tweet['place'],
-                  tweet['user']['verified'],tweet['user']['screen_name'],tweet['user']['description'],
-                  tweet['user']['followers_count'],tweet['user']['friends_count'],tweet['user']['statuses_count']];      
-        except:
-            try:        #si cita una pagina en el tweet
-                L[i]=[tweet['user']['name'],tweet['user']['screen_name'],
-                  tweet['text'],tweet['created_at'],
-                  tweet['retweet_count'],tweet['favorite_count'],
-                  tweet['user']['description'],tweet['entities']['urls'][0]['url'],
-                  tweet['created_at'],tweet['user']['time_zone'], tweet['user']['lang'], tweet['place'],
-                  tweet['user']['verified'],'','',tweet['user']['followers_count'],
-                  tweet['user']['friends_count'],tweet['user']['statuses_count']];
-            except:
-                L[i]=[tweet['user']['name'],tweet['user']['screen_name'],
-                  tweet['text'],tweet['created_at'],
-                  tweet['retweet_count'],tweet['favorite_count'],
-                  tweet['user']['description'],'',
-                  tweet['created_at'],tweet['user']['time_zone'], tweet['user']['lang'], tweet['place'],
-                  tweet['user']['verified'],'','',tweet['user']['followers_count'],
-                  tweet['user']['friends_count'],tweet['user']['statuses_count']]; 
         try:
-            L[i].extend([tweet['entities']['media'][0]['media_url']]) 
+            try:        #si es un retweet
+                try:        #si cita una pagina en el tweet
+                    L[i]=[tweet['retweeted_status']['user']['name'],tweet['retweeted_status']['user']['screen_name'],
+                      tweet['retweeted_status']['text'],tweet['retweeted_status']['created_at'],
+                      tweet['retweeted_status']['retweet_count'],tweet['retweeted_status']['favorite_count'],
+                      tweet['retweeted_status']['user']['description'],tweet['retweeted_status']['entities']['urls'][0]['url'],
+                      tweet['created_at'],tweet['user']['time_zone'], tweet['user']['lang'], tweet['place'],
+                      tweet['user']['verified'],tweet['user']['screen_name'],tweet['user']['description'],
+                      tweet['user']['followers_count'],tweet['user']['friends_count'],tweet['user']['statuses_count']];
+                except:
+                    L[i]=[tweet['retweeted_status']['user']['name'],tweet['retweeted_status']['user']['screen_name'],
+                      tweet['retweeted_status']['text'],tweet['retweeted_status']['created_at'],
+                      tweet['retweeted_status']['retweet_count'],tweet['retweeted_status']['favorite_count'],
+                      tweet['retweeted_status']['user']['description'],'',
+                      tweet['created_at'],tweet['user']['time_zone'], tweet['user']['lang'], tweet['place'],
+                      tweet['user']['verified'],tweet['user']['screen_name'],tweet['user']['description'],
+                      tweet['user']['followers_count'],tweet['user']['friends_count'],tweet['user']['statuses_count']];      
+            except:
+                try:        #si cita una pagina en el tweet
+                    L[i]=[tweet['user']['name'],tweet['user']['screen_name'],
+                      tweet['text'],tweet['created_at'],
+                      tweet['retweet_count'],tweet['favorite_count'],
+                      tweet['user']['description'],tweet['entities']['urls'][0]['url'],
+                      tweet['created_at'],tweet['user']['time_zone'], tweet['user']['lang'], tweet['place'],
+                      tweet['user']['verified'],'','',tweet['user']['followers_count'],
+                      tweet['user']['friends_count'],tweet['user']['statuses_count']];
+                except:
+                    L[i]=[tweet['user']['name'],tweet['user']['screen_name'],
+                      tweet['text'],tweet['created_at'],
+                      tweet['retweet_count'],tweet['favorite_count'],
+                      tweet['user']['description'],'',
+                      tweet['created_at'],tweet['user']['time_zone'], tweet['user']['lang'], tweet['place'],
+                      tweet['user']['verified'],'','',tweet['user']['followers_count'],
+                      tweet['user']['friends_count'],tweet['user']['statuses_count']]; 
+            try:
+                L[i].extend([tweet['entities']['media'][0]['media_url']]) 
+            except:
+                L[i].extend([''])    
+        
+            tweeted_datetime = parser.parse(L[i][3]).replace(tzinfo=None)       
+            if tweeted_datetime > One_hour_ago:
+                print i            
+                i+=1 
         except:
-            L[i].extend([''])    
-    
-        tweeted_datetime = parser.parse(L[i][3]).replace(tzinfo=None)       
-        if tweeted_datetime > One_hour_ago:
-            print i            
-            i+=1    
+            pass
     count2=0;        
     while (count2<kk):
         twitter_stream = TwitterStream(auth=oauth)
@@ -122,6 +125,7 @@ while (count1<k):
         if count2>0:
             time.sleep(180)
         for tweet in iterator:
+            tweet_count -= 1
             try:
                 try:        #si es un retweet
                     try:        #si cita una pagina en el tweet
@@ -165,11 +169,12 @@ while (count1<k):
                 tweeted_datetime = parser.parse(L[i][3]).replace(tzinfo=None)
                 if tweeted_datetime > One_hour_ago:
                     print i
-                    i+=1
-                if tweet_count <= 0:
-                    break            
+                    i+=1           
             except:
                 pass
+            if tweet_count <= 0:
+                break 
+                    
         count2+=1
   
     count1+=1
@@ -247,7 +252,7 @@ while (count1<k):
     TheList = sorted(TheList, key=lambda x:x[3], reverse=True)
     o, p = len(L), k
     Lists=[[0 for x in range(o)] for y in range(p)]
-    Lists[k-1]=TheList
+    Lists[count1-1]=TheList
     pickle.dump(Lists, open('Lists', "wb" ))
     L={index:l for index,l in enumerate(L)}
     i=len(L)
