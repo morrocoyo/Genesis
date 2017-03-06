@@ -115,10 +115,29 @@ def CuentaTemaa():
     wc.pop('temblaba',None); wc.pop('veces',None); wc.pop('vía',None); wc.pop('vuelos',None); wc.pop('noticia',None);wc.pop('co...',None);
     wc.pop('apoyo',None);wc.pop('cerros',None);wc.pop('suelos',None);wc.pop('Cerros',None); wc.pop('Acción',None);wc.pop('co..',None);
     wc.pop('China',None);wc.pop('Valle',None);wc.pop('destrucción',None);wc.pop('intervención',None); wc.pop('plan',None);
-    wc.pop('Carlos',None);wc.pop('IDEAMColombia',None);wc.pop('naturaleza',None);
+    wc.pop('Carlos',None);wc.pop('IDEAMColombia',None);wc.pop('naturaleza',None);wc.pop('Beijing',None);wc.pop('Bogota',None);
+    wc.pop('Bolivia',None);wc.pop('Caribe',None);wc.pop('Cundinamarca',None);wc.pop('Conoce',None);wc.pop('Córdoba',None);
+    wc.pop('Desarrollan',None);wc.pop('Desarrollan',None);wc.pop('EEUU',None);wc.pop('Gobierno',None);wc.pop('GrandesMedios',None);
+    wc.pop('Impacto',None);wc.pop('Día',None);wc.pop('Lee',None);wc.pop('Ley',None);wc.pop('Magdalena',None);wc.pop('Magdalena',None);
+    wc.pop('México',None);wc.pop('Nación',None);wc.pop('importancia',None);wc.pop('indigenas',None);wc.pop('Municipios',None);
+    wc.pop('Nativos',None);wc.pop('Naturaleza',None);wc.pop('ONU',None);wc.pop('Parques',None);wc.pop('Perú',None);wc.pop('co…',None);
+    wc.pop('Proyecto',None);wc.pop('Radio',None);wc.pop('Sistema',None);wc.pop('Ucrania',None);wc.pop('Uds',None);wc.pop('Vida',None);
+    wc.pop('Vivo',None);wc.pop('animal',None);wc.pop('area',None);wc.pop('arquitectura',None);wc.pop('auditiva',None);wc.pop('belleza',None);wc.pop('calor',None);
+    wc.pop('carbón',None);wc.pop('cierre',None);wc.pop('ciudad',None);wc.pop('comunidades',None);wc.pop('concepto',None);wc.pop('derechos',None);wc.pop('diario',None);
+    wc.pop('educación',None);wc.pop('efectos',None);wc.pop('elespectador',None);wc.pop('empresas',None);wc.pop('esfuerzo',None);wc.pop('esfuerzos',None);wc.pop('explotación',None);
+    wc.pop('función',None);wc.pop('generación',None);wc.pop('hielo',None);wc.pop('hogar',None);wc.pop('huella',None);wc.pop('impacto',None);wc.pop('infopresidencia',None);
+    wc.pop('meses',None);wc.pop('mar',None);wc.pop('lumínica',None);wc.pop('localidad',None);wc.pop('la…',None);wc.pop('inteligencia',None);wc.pop('indigenas',None);
+    wc.pop('metro',None);wc.pop('mitad',None);wc.pop('momento',None);wc.pop('objetivo',None);wc.pop('n',None);wc.pop('oeste',None);wc.pop('oso',None);wc.pop('parte',None);  
+    wc.pop('pasos',None);wc.pop('personas',None);wc.pop('petróleo',None);wc.pop('por…',None);wc.pop('potrero',None);wc.pop('producción',None);wc.pop('programa',None);
+    wc.pop('proyectos',None);wc.pop('pueblos',None);wc.pop('puertas',None);wc.pop('puerto',None);wc.pop('tráfico',None);wc.pop('variedad',None);wc.pop('video',None);
+    wc.pop('¿para',None);wc.pop('árboles',None);wc.pop('-->',None);wc.pop('Ciudadana',None);wc.pop('José',None);wc.pop('conservemos',None);wc.pop('divisas',None);
+    wc.pop('→',None);wc.pop('¿para',None);wc.pop('mujeres',None);wc.pop('mineros',None);wc.pop('Mineros',None);wc.pop('Mundial',None);wc.pop('ind\xc3\xadgenas',None);
+    wc.pop('indígenas',None);wc.pop('Fiscal\xc3\xada',None);wc.pop('Fiscalía',None);wc.pop('mineros',None);wc.pop('riesgo',None);
+    
+
     
     PalabrasTema={k: sigmoid(v) for k, v in wc.items()}
-    PalabrasTema=dict((k, v) for k, v in PalabrasTema.items() if v>0.8)
+    PalabrasTema=dict((k, v) for k, v in PalabrasTema.items() if v>0.85)
     #PalabrasTema = dict(sorted(wc.iteritems(), key=operator.itemgetter(1), reverse=True)[:len(wc)/30]);
     PalabrasTema['Sostenibilidad']=PalabrasTema[max(PalabrasTema, key=PalabrasTema.get)]
     PalabrasTema['Climático']=PalabrasTema[max(PalabrasTema, key=PalabrasTema.get)] 

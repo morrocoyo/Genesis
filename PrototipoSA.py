@@ -34,8 +34,8 @@ def similar(a, b):
 La funcion CuentaTemaa define el tema mediante las palabras que más aparecen en
 el archivo Ambiente.txt
 """
-#A=CuentaTemaa()
-A = pickle.load( open( 'A', "rb" ) )
+A=CuentaTemaa()
+#A = pickle.load( open( 'A', "rb" ) )
 """
 Se Cargan las credenciales de acceso al api de twitter
 """
@@ -61,7 +61,7 @@ except:
     LastId=0;       
 #One_hour_ago = datetime.datetime.utcnow().replace(microsecond=0)-datetime.timedelta(hours = 1)
 One_hour_ago = datetime.datetime.utcnow()-datetime.timedelta(hours = 1)
-k=2   #veces que corre el ciclo completo
+k=10   #veces que corre el ciclo completo
 kk=5    #veces que corre el ciclo de streaming
 count1=0;
 tweet_count = 50    #de tweets que lee en el streaming
@@ -176,7 +176,7 @@ while (count1<k):
                 break 
                     
         count2+=1
-  
+   
     count1+=1
     """
     Crea una lista de 3 listas de tamaño Longitud de MorroTL+tweet_count con la calificacion de criterio para cada tweet 
@@ -278,6 +278,9 @@ for t in TheList:
     with open(File, 'a') as dest:
                 T=''.join(['\n', t[2].encode('utf-8')])
                 dest.write(T) 
+                
+#F=dict((I,q) for I,q in Influenciadores.items() if q>3)
+
 
 
     
