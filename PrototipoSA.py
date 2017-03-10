@@ -34,8 +34,8 @@ def similar(a, b):
 La funcion CuentaTemaa define el tema mediante las palabras que más aparecen en
 el archivo Ambiente.txt
 """
-A=CuentaTemaa()
-#A = pickle.load( open( 'A', "rb" ) )
+#A=CuentaTemaa()
+A = pickle.load( open( 'A', "rb" ) )
 """
 Se Cargan las credenciales de acceso al api de twitter
 """
@@ -61,10 +61,10 @@ except:
     LastId=0;       
 #One_hour_ago = datetime.datetime.utcnow().replace(microsecond=0)-datetime.timedelta(hours = 1)
 One_hour_ago = datetime.datetime.utcnow()-datetime.timedelta(hours = 1)
-k=10   #veces que corre el ciclo completo
+k=2  #veces que corre el ciclo completo
 kk=5    #veces que corre el ciclo de streaming
 count1=0;
-tweet_count = 50    #de tweets que lee en el streaming
+tweet_count = 10    #de tweets que lee en el streaming
 i=0;
 L=dict();
 while (count1<k):
@@ -257,7 +257,54 @@ while (count1<k):
     L={index:l for index,l in enumerate(L)}
     i=len(L)
 
+s, t = len(TheList), 3
+Crits = [[0 for x in range(s)] for y in range(t)]
+c=0;
+for q in range(len(TheList)):  
+        for r in LA:
+            try:
+                if r.lower() in TheList[q][2].encode('utf-8').lower().split():
+                    c+=1
+            except:
+                pass
+        Crits[0][q]=max(c,0)
+        c=0
+        try:
+            Crits[1][q]=Influenciadores[TheList[q][1]]
+        except:
+            pass
+        try:
+            u=twitter.users.lookup(screen_name=TheList[q][1])  
+            if u[0]['followers_count']>60:
+                Crits[2][q]=u[0]['followers_count']/u[0]['statuses_count']
+        except:
+            pass
         
+Crits0=[Crits[0][q] for q in range(len(TheList)) if Crits[0][q]>0]
+Crits1=[Crits[1][q] for q in range(len(TheList)) if Crits[0][q]>0]
+Crits2=[Crits[2][q] for q in range(len(TheList)) if Crits[0][q]>0]
+TheList=[TheList[q] for q in range(len(TheList)) if Crits[0][q]>0]
+Indis=range(len(TheList))
+Indis=sorted(zip(Crits0,Indis),reverse=True)
+Indis = [j[1] for j in Indis]
+C2 = [Crits2[j] for j in Indis]
+C1 = [Crits1[j] for j in Indis]
+TheList = [TheList[j] for j in Indis]
+Indis=range(len(TheList))
+Indis=sorted(zip(C2,Indis),reverse=True)
+Indis = [j[1] for j in Indis]
+C2 = [C2[j] for j in Indis]
+C1 = [C1[j] for j in Indis]
+TheList = [TheList[j] for j in Indis]
+Indis=range(len(TheList))
+Indis=sorted(zip(C2,Indis),reverse=True)
+Indis=range(len(TheList))
+Indis=sorted(zip(C1,Indis),reverse=True)
+Indis = [j[1] for j in Indis]
+C1 = [C1[j] for j in Indis]
+TheList = [TheList[j] for j in Indis]  
+
+NewInf=list();          
 InfluenciadoresTest=[q[1] for q in TheList]
 for I in InfluenciadoresTest:
     try:
@@ -267,6 +314,9 @@ for I in InfluenciadoresTest:
             Influenciadores[I]+=1
     except:
         Influenciadores[I]=0
+        NewInf.append(I);
+        if I in NewInf:
+            Influenciadores[I]=0
         print 'nuevo ',I
 pickle.dump(Influenciadores, open('Influenciadores', "wb" ))
 
