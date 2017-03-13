@@ -28,6 +28,8 @@ import re, string
 from difflib import SequenceMatcher
 from CuentaTemaa import *
 
+start = time.time()
+
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 """
@@ -61,10 +63,10 @@ except:
     LastId=0;       
 #One_hour_ago = datetime.datetime.utcnow().replace(microsecond=0)-datetime.timedelta(hours = 1)
 One_hour_ago = datetime.datetime.utcnow()-datetime.timedelta(hours = 1)
-k=2  #veces que corre el ciclo completo
-kk=5    #veces que corre el ciclo de streaming
+k=3  #veces que corre el ciclo completo
+kk=10    #veces que corre el ciclo de streaming
 count1=0;
-tweet_count = 10    #de tweets que lee en el streaming
+tweet_count = 50    #de tweets que lee en el streaming
 i=0;
 L=dict();
 while (count1<k):
@@ -257,6 +259,9 @@ while (count1<k):
     L={index:l for index,l in enumerate(L)}
     i=len(L)
 
+end = time.time()
+print (end - start)/60
+
 s, t = len(TheList), 3
 Crits = [[0 for x in range(s)] for y in range(t)]
 c=0;
@@ -302,10 +307,12 @@ Indis=range(len(TheList))
 Indis=sorted(zip(C1,Indis),reverse=True)
 Indis = [j[1] for j in Indis]
 C1 = [C1[j] for j in Indis]
-TheList = [TheList[j] for j in Indis]  
+TheList = [TheList[j] for j in Indis] 
+
 
 NewInf=list();          
 InfluenciadoresTest=[q[1] for q in TheList]
+    
 for I in InfluenciadoresTest:
     try:
         if Influenciadores[I]<0:
@@ -318,10 +325,23 @@ for I in InfluenciadoresTest:
         if I in NewInf:
             Influenciadores[I]=0
         print 'nuevo ',I
-pickle.dump(Influenciadores, open('Influenciadores', "wb" ))
 
+for m in range(1,len(TheList)):
+    if m<len(TheList):
+        for n in range(0,m):
+            if n<m:
+                if similar(TheList[m][2],TheList[n][2])>0.75:
+                    try:
+                        if TheList[m][1]==TheList[n][1] and Influenciadores[TheList[m][1]]>0:
+                            Influenciadores[TheList[m][1]]=max(0,Influenciadores[TheList[m][1]]-1)
+                        del TheList[m];
+                        m=m-1;  
+                    except:
+                        pass 
+pickle.dump(Influenciadores, open('Influenciadores', "wb" ))
 for t in TheList:
     print ''.join([t[0],'\n',t[1],'\n',t[2],'\n\n'])
+
         
 File='Ambiente.txt';
 for t in TheList: 
