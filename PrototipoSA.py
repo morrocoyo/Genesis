@@ -63,8 +63,8 @@ except:
     LastId=0;       
 #One_hour_ago = datetime.datetime.utcnow().replace(microsecond=0)-datetime.timedelta(hours = 1)
 One_hour_ago = datetime.datetime.utcnow()-datetime.timedelta(hours = 1)
-k=3  #veces que corre el ciclo completo
-kk=10    #veces que corre el ciclo de streaming
+k=10  #veces que corre el ciclo completo
+kk=6    #veces que corre el ciclo de streaming
 count1=0;
 tweet_count = 50    #de tweets que lee en el streaming
 i=0;
@@ -123,9 +123,9 @@ while (count1<k):
     while (count2<kk):
         twitter_stream = TwitterStream(auth=oauth)
         iterator = twitter_stream.statuses.filter(track=tx, language="es")
-        print count2
+        print count1,count2
         if count2>0:
-            time.sleep(180)
+            time.sleep(220)
         for tweet in iterator:
             tweet_count -= 1
             try:
@@ -340,7 +340,7 @@ for m in range(1,len(TheList)):
                         pass 
 pickle.dump(Influenciadores, open('Influenciadores', "wb" ))
 for t in TheList:
-    print ''.join([t[0],'\n',t[1],'\n',t[2],'\n\n'])
+    print ''.join([t[0],'\n',t[1],'\n',t[2], '\n',t[3],'\n\n'])
 
         
 File='Ambiente.txt';
