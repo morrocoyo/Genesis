@@ -41,8 +41,8 @@ A = pickle.load( open( 'A', "rb" ) )
 """
 Se Cargan las credenciales de acceso al api de twitter
 """
-ACCESS_TOKEN = u'817383621397008384-TXP2pfAr0aLmr3E9Le3tDBlMSsUTQF9'
-ACCESS_SECRET = u'oBXXy2cmyZ80PUm6EhUHGAs7SRb13HxYO5TWj2fq9AYVN'
+ACCESS_TOKEN = u'817383621397008384-TXP2pfAr0aLmr3E9Le3tDBlMSsUTQFg'
+ACCESS_SECRET = u'oBXXy2cmyZ80PUm6EhUHGAs7SRb13HxYO5TWj2fqgAYVN'
 CONSUMER_KEY = u'kpKOxDTCtWI8ueapP6JSySgfM'
 CONSUMER_SECRET = u'ep7Di6fA1izMlQdQXBmcKiGT0q7PoXX2nDgaxFHjihA2ofgaAu'
 oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
@@ -63,7 +63,7 @@ except:
     LastId=0;       
 #One_hour_ago = datetime.datetime.utcnow().replace(microsecond=0)-datetime.timedelta(hours = 1)
 One_hour_ago = datetime.datetime.utcnow()-datetime.timedelta(hours = 1)
-k=10  #veces que corre el ciclo completo
+k=23  #veces que corre el ciclo completo
 kk=6    #veces que corre el ciclo de streaming
 count1=0;
 tweet_count = 50    #de tweets que lee en el streaming
@@ -125,7 +125,7 @@ while (count1<k):
         iterator = twitter_stream.statuses.filter(track=tx, language="es")
         print count1,count2
         if count2>0:
-            time.sleep(220)
+            time.sleep(225)
         for tweet in iterator:
             tweet_count -= 1
             try:
@@ -236,19 +236,21 @@ while (count1<k):
     C1 = [C1[j] for j in Indices]
     L = [L[j] for j in Indices]  
    
-    #elimina tweets "iguales"    
+    #elimina tweets "iguales" 
+    co=0 
+    IndRep=list();
     for m in range(1,len(L)):
-        if m<len(L):
-            for n in range(0,m):
-                if n<m:
-                    if similar(L[m][2],L[n][2])>0.75:
-                        try:
-                            if L[m][1]==L[n][1] and Influenciadores[L[m][1]]>0:
-                                Influenciadores[L[m][1]]=max(0,Influenciadores[L[m][1]]-1)
-                            del L[m];
-                            m=m-1;  
-                        except:
-                            pass
+        for n in range(0,m):
+            if m not in IndRep:
+                if similar(L[m][2],L[n][2])>0.75:
+                    try:
+                        if L[m][1]==L[n][1] and Influenciadores[L[m][1]]>=0:
+#                            Influenciadores[L[m][1]]=max(0,Influenciadores[L[m][1]]-1)
+                            IndRep.append(m)
+    #                            del L[m];
+                    except:
+                        pass
+    L = [r for q, r in enumerate(L) if q not in IndRep]    #elimina los indices de IndRep
     
     TheList=L[:int(math.modf(len(L)*0.85)[1])]
     TheList = sorted(TheList, key=lambda x:x[3], reverse=True)
@@ -259,9 +261,23 @@ while (count1<k):
     L={index:l for index,l in enumerate(L)}
     i=len(L)
 
-end = time.time()
-print (end - start)/60
 
+NewInf=list();          
+InfluenciadoresTest=[q[1] for q in TheList]
+InfluenciadoresTest = sorted(set(InfluenciadoresTest))
+    
+for I in InfluenciadoresTest:
+    try:
+        if Influenciadores[I]<0:
+            Influenciadores[I]-=1
+        else:
+            Influenciadores[I]=Influenciadores[I]+[q[1] for q in TheList].count(I);
+    except:
+        NewInf.append(I);
+        if I in NewInf:
+            Influenciadores[I]=0
+        print 'nuevo ',I
+        
 s, t = len(TheList), 3
 Crits = [[0 for x in range(s)] for y in range(t)]
 c=0;
@@ -284,6 +300,7 @@ for q in range(len(TheList)):
                 Crits[2][q]=u[0]['followers_count']/u[0]['statuses_count']
         except:
             pass
+
         
 Crits0=[Crits[0][q] for q in range(len(TheList)) if Crits[0][q]>0]
 Crits1=[Crits[1][q] for q in range(len(TheList)) if Crits[0][q]>0]
@@ -310,39 +327,26 @@ C1 = [C1[j] for j in Indis]
 TheList = [TheList[j] for j in Indis] 
 
 
-NewInf=list();          
-InfluenciadoresTest=[q[1] for q in TheList]
-    
-for I in InfluenciadoresTest:
-    try:
-        if Influenciadores[I]<0:
-            Influenciadores[I]-=1
-        else:
-            Influenciadores[I]+=1
-    except:
-        Influenciadores[I]=0
-        NewInf.append(I);
-        if I in NewInf:
-            Influenciadores[I]=0
-        print 'nuevo ',I
 
-for m in range(1,len(TheList)):
-    if m<len(TheList):
-        for n in range(0,m):
-            if n<m:
-                if similar(TheList[m][2],TheList[n][2])>0.75:
-                    try:
-                        if TheList[m][1]==TheList[n][1] and Influenciadores[TheList[m][1]]>0:
-                            Influenciadores[TheList[m][1]]=max(0,Influenciadores[TheList[m][1]]-1)
-                        del TheList[m];
-                        m=m-1;  
-                    except:
-                        pass 
+
+#for m in range(1,len(TheList)):
+#    if m<len(TheList):
+#        for n in range(0,m):
+#            if n<m:
+#                if similar(TheList[m][2],TheList[n][2])>0.75:
+#                    try:
+#                        if TheList[m][1]==TheList[n][1] and Influenciadores[TheList[m][1]]>=0:
+#                                Influenciadores[L[m][1]]=max(0,Influenciadores[L[m][1]]-1)
+#                                IndRep.append(n)
+#                    except:
+#                        pass 
+
 pickle.dump(Influenciadores, open('Influenciadores', "wb" ))
 for t in TheList:
     print ''.join([t[0],'\n',t[1],'\n',t[2], '\n',t[3],'\n\n'])
 
-        
+end = time.time()  
+     
 File='Ambiente.txt';
 for t in TheList: 
     with open(File, 'a') as dest:
@@ -351,7 +355,7 @@ for t in TheList:
                 
 #F=dict((I,q) for I,q in Influenciadores.items() if q>3)
 
-
+print (end - start)/3600, 'horas'
 
     
     
