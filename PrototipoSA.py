@@ -41,8 +41,8 @@ A = pickle.load( open( 'A', "rb" ) )
 """
 Se Cargan las credenciales de acceso al api de twitter
 """
-ACCESS_TOKEN = u'817383621397008384-TXP2pfAr0aLmr3E9Le3tDBlMSsUTQFg'
-ACCESS_SECRET = u'oBXXy2cmyZ80PUm6EhUHGAs7SRb13HxYO5TWj2fqgAYVN'
+ACCESS_TOKEN = u'817383621397008384-TXP2pfAr0aLmr3E9Le3tDBlMSsUTQF9'
+ACCESS_SECRET = u'oBXXy2cmyZ80PUm6EhUHGAs7SRb13HxYO5TWj2fq9AYVN'
 CONSUMER_KEY = u'kpKOxDTCtWI8ueapP6JSySgfM'
 CONSUMER_SECRET = u'ep7Di6fA1izMlQdQXBmcKiGT0q7PoXX2nDgaxFHjihA2ofgaAu'
 oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
@@ -63,7 +63,7 @@ except:
     LastId=0;       
 #One_hour_ago = datetime.datetime.utcnow().replace(microsecond=0)-datetime.timedelta(hours = 1)
 One_hour_ago = datetime.datetime.utcnow()-datetime.timedelta(hours = 1)
-k=23  #veces que corre el ciclo completo
+k=22  #veces que corre el ciclo completo
 kk=6    #veces que corre el ciclo de streaming
 count1=0;
 tweet_count = 50    #de tweets que lee en el streaming
@@ -353,7 +353,7 @@ for t in TheList:
                 T=''.join(['\n', t[2].encode('utf-8')])
                 dest.write(T) 
                 
-#F=dict((I,q) for I,q in Influenciadores.items() if q>3)
+#F=dict((I,q) for I,q in Influenciadores.items() if q>2)
 
 print (end - start)/3600, 'horas'
 

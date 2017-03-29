@@ -113,7 +113,7 @@ def CuentaTemaa():
     wc.pop('hora',None); wc.pop('lluvias',None); wc.pop('niveles',None); wc.pop('número',None); wc.pop('países',None);
     wc.pop('prioridad',None); wc.pop('pueblo',None); wc.pop('regulación',None); wc.pop('siglo',None); wc.pop('superficie',None);
     wc.pop('temblaba',None); wc.pop('veces',None); wc.pop('vía',None); wc.pop('vuelos',None); wc.pop('noticia',None);wc.pop('co...',None);
-    wc.pop('apoyo',None);wc.pop('cerros',None);wc.pop('suelos',None);wc.pop('Cerros',None); wc.pop('Acción',None);wc.pop('co..',None);
+    wc.pop('apoyo',None);wc.pop('cerros',None);wc.pop('suelos',None);wc.pop('Cerros',None); wc.pop('Acción',None);wc.pop('para…',None);
     wc.pop('China',None);wc.pop('Valle',None);wc.pop('destrucción',None);wc.pop('intervención',None); wc.pop('plan',None);
     wc.pop('Carlos',None);wc.pop('IDEAMColombia',None);wc.pop('naturaleza',None);wc.pop('Beijing',None);wc.pop('Bogota',None);
     wc.pop('Bolivia',None);wc.pop('Caribe',None);wc.pop('Cundinamarca',None);wc.pop('Conoce',None);wc.pop('Córdoba',None);
@@ -132,12 +132,24 @@ def CuentaTemaa():
     wc.pop('proyectos',None);wc.pop('pueblos',None);wc.pop('puertas',None);wc.pop('puerto',None);wc.pop('tráfico',None);wc.pop('variedad',None);wc.pop('video',None);
     wc.pop('¿para',None);wc.pop('árboles',None);wc.pop('-->',None);wc.pop('Ciudadana',None);wc.pop('José',None);wc.pop('conservemos',None);wc.pop('divisas',None);
     wc.pop('→',None);wc.pop('¿para',None);wc.pop('mujeres',None);wc.pop('mineros',None);wc.pop('Mineros',None);wc.pop('Mundial',None);wc.pop('ind\xc3\xadgenas',None);
-    wc.pop('indígenas',None);wc.pop('Fiscal\xc3\xada',None);wc.pop('Fiscalía',None);wc.pop('mineros',None);wc.pop('riesgo',None);
-    
-
+    wc.pop('indígenas',None);wc.pop('Fiscal\xc3\xada',None);wc.pop('Fiscalía',None);wc.pop('mineros',None);wc.pop('riesgo',None);wc.pop('AEstaHora',None);
+    wc.pop('Cambio',None);wc.pop('Carrizosa',None);wc.pop('Centro',None);wc.pop('Desarrollo',None);wc.pop('División',None);wc.pop('EAFIT',None);
+    wc.pop('EE',None);wc.pop('Ecuador',None);wc.pop('Educación',None);wc.pop('Energía',None);wc.pop('EstaSemana',None);wc.pop('Evaluación',None);
+    wc.pop('G20',None);wc.pop('Importancia',None);wc.pop('Julio',None);wc.pop('Justicia',None);wc.pop('Madre',None);wc.pop('Mayabeque',None);
+    wc.pop('Medellín',None);wc.pop('Medio',None);wc.pop('N9PiX2Cyqz',None);wc.pop('Noticias',None);wc.pop('Plan',None);wc.pop('Programa',None);
+    wc.pop('Repú',None);wc.pop('Revisa',None);wc.pop('Torres',None);wc.pop('Trump',None);wc.pop('UU',None);wc.pop('Venezuela',None);
+    wc.pop('afectaría',None);wc.pop('aguas',None);wc.pop('aguas',None);wc.pop('autoridades',None);wc.pop('barrio',None);wc.pop('basura',None);
+    wc.pop('conciencia',None);wc.pop('congresoperu',None);wc.pop('consumo',None);wc.pop('control',None);wc.pop('cuidado',None);wc.pop('círculo',None);
+    wc.pop('denuncia',None);wc.pop('diversidad',None);wc.pop('emergencia',None);wc.pop('en…',None);wc.pop('estrategias',None);wc.pop('estudios',None);
+    wc.pop('forma',None);wc.pop('foro',None);wc.pop('ingresados',None);wc.pop('is',None);wc.pop('jueves',None);wc.pop('justicia',None);
+    wc.pop('manera',None);wc.pop('marina',None);wc.pop('marzo',None);wc.pop('norte',None);wc.pop('opinas',None);wc.pop('p',None);
+    wc.pop('forma',None);wc.pop('foro',None);wc.pop('ingresados',None);wc.pop('is',None);wc.pop('patrimonio',None);wc.pop('peces',None);
+    wc.pop('prensa',None);wc.pop('productos',None);wc.pop('razón',None);wc.pop('recursos',None);wc.pop('restauración',None);wc.pop('socio',None);
+    wc.pop('tasa',None);wc.pop('via',None);wc.pop('vicioso',None);wc.pop('violencia',None);wc.pop('zona',None);wc.pop('alimentación',None);
+    wc.pop('conservación',None);wc.pop('estrategia',None);wc.pop('mina',None);wc.pop('violencia',None);wc.pop('zona',None);wc.pop('alimentación',None);
     
     PalabrasTema={k: sigmoid(v) for k, v in wc.items()}
-    PalabrasTema=dict((k, v) for k, v in PalabrasTema.items() if v>0.85)
+    PalabrasTema=dict((k, v) for k, v in PalabrasTema.items() if v>0.95)
     #PalabrasTema = dict(sorted(wc.iteritems(), key=operator.itemgetter(1), reverse=True)[:len(wc)/30]);
     PalabrasTema['Sostenibilidad']=PalabrasTema[max(PalabrasTema, key=PalabrasTema.get)]
     PalabrasTema['Climático']=PalabrasTema[max(PalabrasTema, key=PalabrasTema.get)] 
@@ -146,6 +158,11 @@ def CuentaTemaa():
     PalabrasTema['COP22']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)] 
     PalabrasTema['extractivismo']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)]
     PalabrasTema['Habitat3']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)]
+    PalabrasTema['ambientalista']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)]
+    PalabrasTema['ambientalistas']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)]
+    PalabrasTema['ambientalismo']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)]
+    PalabrasTema['ecología']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)]
+    PalabrasTema['#CambioClimatico']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)]
     return PalabrasTema
        
     
