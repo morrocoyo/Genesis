@@ -147,6 +147,7 @@ def CuentaTemaa():
     wc.pop('prensa',None);wc.pop('productos',None);wc.pop('razón',None);wc.pop('recursos',None);wc.pop('restauración',None);wc.pop('socio',None);
     wc.pop('tasa',None);wc.pop('via',None);wc.pop('vicioso',None);wc.pop('violencia',None);wc.pop('zona',None);wc.pop('alimentación',None);
     wc.pop('conservación',None);wc.pop('estrategia',None);wc.pop('mina',None);wc.pop('violencia',None);wc.pop('zona',None);wc.pop('alimentación',None);
+    wc.pop('Amazonas',None);wc.pop('Mercurio',None);
     
     PalabrasTema={k: sigmoid(v) for k, v in wc.items()}
     PalabrasTema=dict((k, v) for k, v in PalabrasTema.items() if v>0.95)
@@ -163,6 +164,9 @@ def CuentaTemaa():
     PalabrasTema['ambientalismo']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)]
     PalabrasTema['ecología']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)]
     PalabrasTema['#CambioClimatico']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)]
+    PalabrasTema['ecoturismo']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)]
+    PalabrasTema['agrotoxicos']=PalabrasTema[min(PalabrasTema, key=PalabrasTema.get)]
+    
     return PalabrasTema
        
     
