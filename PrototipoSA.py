@@ -37,12 +37,14 @@ La funcion CuentaTemaa define el tema mediante las palabras que más aparecen en
 el archivo Ambiente.txt
 """
 #A=CuentaTemaa()
+#B={'#'+k : A[k] for k in set(A)}
+#A.update(B)
 A = pickle.load( open( 'A', "rb" ) )
 """
 Se Cargan las credenciales de acceso al api de twitter
 """
-ACCESS_TOKEN = u'817383621397008384-TXP2pfAr0aLmr3E9Le3tDBlMSsUTQF9'
-ACCESS_SECRET = u'oBXXy2cmyZ80PUm6EhUHGAs7SRb13HxYO5TWj2fq9AYVN'
+ACCESS_TOKEN = u'817383621397008384-TXP2pfAr0aLmr3E9Le3tDBlMSsUTQFg'
+ACCESS_SECRET = u'oBXXy2cmyZ80PUm6EhUHGAs7SRb13HxYO5TWj2fqgAYVN'
 CONSUMER_KEY = u'kpKOxDTCtWI8ueapP6JSySgfM'
 CONSUMER_SECRET = u'ep7Di6fA1izMlQdQXBmcKiGT0q7PoXX2nDgaxFHjihA2ofgaAu'
 oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
@@ -63,10 +65,10 @@ except:
     LastId=0;       
 #One_hour_ago = datetime.datetime.utcnow().replace(microsecond=0)-datetime.timedelta(hours = 1)
 One_hour_ago = datetime.datetime.utcnow()-datetime.timedelta(hours = 1)
-k=22  #veces que corre el ciclo completo
+k=26  #veces que corre el ciclo completo
 kk=6    #veces que corre el ciclo de streaming
 count1=0;
-tweet_count = 50    #de tweets que lee en el streaming
+tweet_count = 70    #de tweets que lee en el streaming
 i=0;
 L=dict();
 while (count1<k):
