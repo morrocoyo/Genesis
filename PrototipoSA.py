@@ -65,7 +65,7 @@ except:
     LastId=0;       
 #One_hour_ago = datetime.datetime.utcnow().replace(microsecond=0)-datetime.timedelta(hours = 1)
 One_hour_ago = datetime.datetime.utcnow()-datetime.timedelta(hours = 1)
-k=26  #veces que corre el ciclo completo
+k=15  #veces que corre el ciclo completo
 kk=6    #veces que corre el ciclo de streaming
 count1=0;
 tweet_count = 70    #de tweets que lee en el streaming
@@ -127,7 +127,7 @@ while (count1<k):
         iterator = twitter_stream.statuses.filter(track=tx, language="es")
         print count1,count2
         if count2>0:
-            time.sleep(225)
+            time.sleep(230)
         for tweet in iterator:
             tweet_count -= 1
             try:
@@ -254,7 +254,7 @@ while (count1<k):
                         pass
     L = [r for q, r in enumerate(L) if q not in IndRep]    #elimina los indices de IndRep
     
-    TheList=L[:int(math.modf(len(L)*0.85)[1])]
+    TheList=L[:int(math.modf(len(L)*0.75)[1])]
     TheList = sorted(TheList, key=lambda x:x[3], reverse=True)
     o, p = len(L), k
     Lists=[[0 for x in range(o)] for y in range(p)]
@@ -344,7 +344,7 @@ TheList = [TheList[j] for j in Indis]
 #                        pass 
 
 pickle.dump(Influenciadores, open('Influenciadores', "wb" ))
-for t in TheList:
+for t in TheList[0:80]:
     print ''.join([t[0],'\n',t[1],'\n',t[2], '\n',t[3],'\n\n'])
 
 end = time.time()  
