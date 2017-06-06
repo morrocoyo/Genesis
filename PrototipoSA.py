@@ -65,10 +65,10 @@ except:
     LastId=0;       
 #One_hour_ago = datetime.datetime.utcnow().replace(microsecond=0)-datetime.timedelta(hours = 1)
 One_hour_ago = datetime.datetime.utcnow()-datetime.timedelta(hours = 1)
-k=15  #veces que corre el ciclo completo
+k=27  #veces que corre el ciclo completo
 kk=6    #veces que corre el ciclo de streaming
 count1=0;
-tweet_count = 70    #de tweets que lee en el streaming
+tweet_count = 80    #de tweets que lee en el streaming
 i=0;
 L=dict();
 while (count1<k):
@@ -244,7 +244,7 @@ while (count1<k):
     for m in range(1,len(L)):
         for n in range(0,m):
             if m not in IndRep:
-                if similar(L[m][2],L[n][2])>0.75:
+                if similar(L[m][2],L[n][2])>0.72:
                     try:
                         if L[m][1]==L[n][1] and Influenciadores[L[m][1]]>=0:
 #                            Influenciadores[L[m][1]]=max(0,Influenciadores[L[m][1]]-1)
@@ -354,8 +354,14 @@ for t in TheList:
     with open(File, 'a') as dest:
                 T=''.join(['\n', t[2].encode('utf-8')])
                 dest.write(T) 
-                
-#F=dict((I,q) for I,q in Influenciadores.items() if q>2)
+
+#def sigmoid(x):
+#    return 1 / (1 + math.exp(-x))
+
+#FF={k: sigmoid(v) for k, v in Influenciadores.items()}
+#F=dict((I,q) for I,q in FF.items() if q>0.95)
+#F1 = sorted(F.items(), key=lambda k: k[1], reverse=True)
+
 
 print (end - start)/3600, 'horas'
 
