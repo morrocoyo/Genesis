@@ -29,6 +29,11 @@ import re, string
 from difflib import SequenceMatcher
 from CuentaTemaa import *
 
+<<<<<<< HEAD
+=======
+a=2
+
+>>>>>>> 8caf5ccc204867f8303669e9892acddf6042cc14
 
 start = time.time()
 
