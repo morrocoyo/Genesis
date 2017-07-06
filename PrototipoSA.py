@@ -28,7 +28,8 @@ import re, string
 from difflib import SequenceMatcher
 from CuentaTemaa import *
 
-a=1
+a=2
+
 
 start = time.time()
 
