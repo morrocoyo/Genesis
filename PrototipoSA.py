@@ -29,11 +29,6 @@ import re, string
 from difflib import SequenceMatcher
 from CuentaTemaa import *
 
-<<<<<<< HEAD
-=======
-a=2
-
->>>>>>> 8caf5ccc204867f8303669e9892acddf6042cc14
 
 start = time.time()
 
@@ -351,6 +346,7 @@ TheList = [TheList[j] for j in Indis]
 #                    except:
 #                        pass 
 
+os.chdir('/home/juang/Documents/Python Scripts/Genesis/Data')
 pickle.dump(Influenciadores, open('Influenciadores', "wb" ))
 for t in TheList[0:80]:
     print ''.join([t[0],'\n',t[1],'\n',t[2], '\n',t[3],'\n\n'])
