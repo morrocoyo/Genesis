@@ -28,6 +28,8 @@ import re, string
 from difflib import SequenceMatcher
 from CuentaTemaa import *
 
+a=1
+
 start = time.time()
 
 def similar(a, b):
