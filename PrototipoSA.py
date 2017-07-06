@@ -6,6 +6,7 @@ Created on Sun Jan 15 22:30:25 2017
 Simulador prototipo Subtuiter Ambiental
 """
 
+import os
 from __future__ import division
 import pdb #para hacer debug parcial
 try:
@@ -28,7 +29,6 @@ import re, string
 from difflib import SequenceMatcher
 from CuentaTemaa import *
 
-a=1
 
 start = time.time()
 
@@ -41,7 +41,9 @@ el archivo Ambiente.txt
 #A=CuentaTemaa()
 #B={'#'+k : A[k] for k in set(A)}
 #A.update(B)
-A = pickle.load( open( 'A', "rb" ) )
+
+A = pickle.load( open( './Data/A', "rb" ) )
+Influenciadores = pickle.load( open( './Data/Influenciadores', "rb" ) )
 """
 Se Cargan las credenciales de acceso al api de twitter
 """
@@ -53,7 +55,6 @@ oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 """
 Ciclo de Simulacion: Busqueda de tuits ambientales en Morrocoyo TimeLine + Streaming
 """
-Influenciadores = pickle.load( open( 'Influenciadores', "rb" ) )
 #Lista de palabras mas usadas en el tema
 LA=A.keys()
 #pdb.set_trace()   
