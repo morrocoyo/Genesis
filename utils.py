@@ -7,6 +7,7 @@ Created on Mon Jun  5 22:52:33 2017
 """
 from difflib import SequenceMatcher
 import pandas as pd
+import operator
 import math
 import re
 import numpy as np
