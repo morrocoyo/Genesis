@@ -34,7 +34,7 @@ os.path.dirname(os.path.abspath(__file__))
 """Se el diccionario de palabras que identifican al tema ambiental A y el
 diccionario de influenciadores del tema"""
 A = pickle.load( open( './Data/A', "rb" ) )
-Influenciadores = pickle.load( open( './Data/Influenciadores', "rb" ) )
+Influ = pickle.load( open( './Data/InfluenciadoresC', "rb" ) )
 
 """Se Cargan las credenciales de acceso al api de twitter"""
 ACCESS_TOKEN = u'817383621397008384-TXP2pfAr0aLmr3E9Le3tDBlMSsUTQF9'
@@ -55,10 +55,24 @@ tx=",".join(LA)
 """Datetime de hace una hora al momento de comenzar a correr"""
 One_hour_ago = datetime.datetime.utcnow()-datetime.timedelta(hours = 1)
 
+"""Especifica el conjunto actual de mayores influenciadores - cuantil 25 superior"""
+Influencers=Influ
+for I in Influencers.keys():
+    Influencers[I].append((Influencers[I][4]*4/3+Influencers[I][5])/2.3)
+Influenciadores={I:Influencers[I] for I in Influencers if Influencers[I][6]>0.75}
 
 
 
 
+
+#F=Influenciadores.items()
+#Indices=list()
+#for i in range(len(F)):
+#    if isinstance(F[i][1], int):
+#        Indices.append(i)
+#F1 = [F[i] for i in enumerate(F) if i not in Indices]
+#F11=[f for f in F1 if f[1][3]>0]
+#F2 = sorted(F11, key=lambda k: k[1][2], reverse=True)
 
 
 

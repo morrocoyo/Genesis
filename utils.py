@@ -39,3 +39,10 @@ def CAGRLast(x):
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
     
+def normalizeLogN(x):
+    y=np.log(x)
+    mu=np.mean(y)
+    sigma=np.std(y)
+    Z=(y-mu)/sigma
+    return np.exp(Z)
+    
