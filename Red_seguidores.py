@@ -29,14 +29,16 @@ import numpy as np
 #import CuentaTema
 from difflib import SequenceMatcher
 
-Influ = pickle.load( open( './Data/InfluenciadoresC', "rb" ) )
+Influ = pickle.load(open('./Data/InfluenciadoresC', "rb" ) )
 
 #Defino cauntil
-q = 99
+q=0.95
+Influencers=Influ
+for I in Influencers.keys():
+    Influencers[I].append((Influencers[I][4]*4/3+Influencers[I][5])/2.3)
+Influenciadores={I:Influencers[I] for I in Influencers if Influencers[I][6]>q}
 #Se halla percentil q 
-p = np.percentile(Influenciadores.values(), q)
-#Defino un nuevo diccionario respecto al cuantil
-Inf_q = dict((I,s) for I,s in Influenciadores.items() if s>p) 
+
 
 ACCESS_TOKEN = u'817383621397008384-TXP2pfAr0aLmr3E9Le3tDBlMSsUTQF9'
 ACCESS_SECRET = u'oBXXy2cmyZ80PUm6EhUHGAs7SRb13HxYO5TWj2fq9AYVN'
@@ -52,7 +54,7 @@ while R_id_followers['next_cursor'] != 0:
     R_id_followers = twitter.followers.ids(screen_name = Inf_q.keys()[0],cursor=R_id_followers['next_cursor'])
     seguidores=seguidores+R_id_followers['ids']  
     
-pt=Inf_q.keys()  
+pt=Influenciadores.keys()  
 pt_2 = []
 
 j=1
