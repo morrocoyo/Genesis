@@ -29,10 +29,10 @@ import numpy as np
 #import CuentaTema
 from difflib import SequenceMatcher
 
-Influenciadores = pickle.load( open( './Data/Influenciadores', "rb" ) )
+Influ = pickle.load( open( './Data/InfluenciadoresC', "rb" ) )
 
 #Defino cauntil
-q = 99.9
+q = 99
 #Se halla percentil q 
 p = np.percentile(Influenciadores.values(), q)
 #Defino un nuevo diccionario respecto al cuantil
@@ -50,6 +50,25 @@ R_id_followers=dict()
 R_id_followers['next_cursor']=-1
 while R_id_followers['next_cursor'] != 0:
     R_id_followers = twitter.followers.ids(screen_name = Inf_q.keys()[0],cursor=R_id_followers['next_cursor'])
-    seguidores=seguidores+R_id_followers['ids']              
+    seguidores=seguidores+R_id_followers['ids']  
+    
+pt=Inf_q.keys()  
+pt_2 = []
+
+j=1
+for i in range(2,5):
+    seguidores=list()
+    R_id_followers = dict()
+    R_id_followers['next_cursor']=-1
+    while R_id_followers['next_cursor'] != 0:
+        R_id_followers = twitter.followers.ids(screen_name = pt[i],
+        cursor=R_id_followers['next_cursor'])
+        j+=1
+        seguidores=seguidores+R_id_followers['ids']       
+    pt_2.append(seguidores)
+    if j==15:
+        time.sleep(905)
+        j=1
+            
 
 

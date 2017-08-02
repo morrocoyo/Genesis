@@ -9,7 +9,7 @@ from difflib import SequenceMatcher
 from utils import normalize, similar
 from dateutil import parser
 
-def Repetidos(Lista):
+def Repetidos(Lista, Influ):
     co=0 
     IndRep=list();
     for m in range(1,len(Lista)):
@@ -17,7 +17,7 @@ def Repetidos(Lista):
             if m not in IndRep:
                 if similar(Lista[m][2],Lista[n][2])>0.72:
                     try:
-                        if Lista[m][1]==Lista[n][1] and Influenciadores[Lista[m][1]]>=0:
+                        if Lista[m][1]==Lista[n][1] and Influ[Lista[m][1]][3]>=0:
                             IndRep.append(m)
                     except:
                         pass

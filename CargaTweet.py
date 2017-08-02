@@ -15,7 +15,7 @@ def CargaTweet(L, tweet, i):
               tweet['retweeted_status']['retweet_count'],tweet['retweeted_status']['favorite_count'],
               tweet['retweeted_status']['user']['description'],tweet['retweeted_status']['entities']['urls'][0]['url'],
               tweet['created_at'],tweet['user']['time_zone'], tweet['user']['lang'], tweet['place'],
-              tweet['user']['verified'],tweet['user']['screen_name'],tweet['user']['description'],
+              tweet['user']['verified'],tweet['user']['name'],tweet['user']['description'],
               tweet['user']['followers_count'],tweet['user']['friends_count'],tweet['user']['statuses_count']];
         except:
             L[i]=[tweet['retweeted_status']['user']['name'],tweet['retweeted_status']['user']['screen_name'],
@@ -23,7 +23,7 @@ def CargaTweet(L, tweet, i):
               tweet['retweeted_status']['retweet_count'],tweet['retweeted_status']['favorite_count'],
               tweet['retweeted_status']['user']['description'],'',
               tweet['created_at'],tweet['user']['time_zone'], tweet['user']['lang'], tweet['place'],
-              tweet['user']['verified'],tweet['user']['screen_name'],tweet['user']['description'],
+              tweet['user']['verified'],tweet['user']['name'],tweet['user']['description'],
               tweet['user']['followers_count'],tweet['user']['friends_count'],tweet['user']['statuses_count']];      
     except:
         try:        #si cita una pagina en el tweet
